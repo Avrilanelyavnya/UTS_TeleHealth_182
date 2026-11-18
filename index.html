@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cek Mandiri – Self-Assessment Telehealth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#17202e;--mut:#5d6879;--bg:#f2f4f8;--card:#fff;--line:#dfe3ea;--ac:#1f4fd8;--acs:#e6ecfd;--ok:#16794c;--oks:#def5e9;--wn:#8a5a00;--wns:#fdf0cf;--er:#b42318;--ers:#fde7e4;--in:#0b6277;--ins:#dff3f8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.2;margin:0 0 .5rem}
+h1{font-size:1.9rem}h2{font-size:1.3rem}h3{font-size:1.05rem}
+nav{position:sticky;top:0;z-index:5;background:var(--ink);color:#fff;display:flex;align-items:center;gap:1.2rem;padding:.7rem max(1rem,calc(50% - 400px));flex-wrap:wrap}
+nav b{font-family:"Bricolage Grotesque",sans-serif;font-size:1.15rem;margin-right:auto}
+nav a{color:#c9d2e4;text-decoration:none;padding:.25rem 0;border-bottom:2px solid transparent}
+nav a.on{color:#fff;border-color:#fff}
+main{max-width:800px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.2rem;margin-bottom:1rem}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}.sp{justify-content:space-between}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.7rem;margin-bottom:1rem}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem}
+.stat b{display:block;font:700 1.8rem "Bricolage Grotesque",sans-serif}
+.mut{color:var(--mut);font-size:.9rem}
+button,.btn{font:inherit;font-weight:600;border-radius:8px;padding:.55rem 1rem;border:1.5px solid var(--ac);background:var(--ac);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+button.o,.btn.o{background:#fff;color:var(--ac)}button.d{background:#fff;color:var(--er);border-color:var(--er)}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid #7b9bff;outline-offset:2px}
+label.f{display:block;font-weight:600;margin:.2rem 0 .35rem}
+input[type=text],input[type=number],input[type=date],input[type=password],textarea,select{width:100%;font:inherit;padding:.55rem .7rem;border:1.5px solid var(--line);border-radius:8px;background:#fff}
+textarea{min-height:90px}
+.q{padding:1rem 0;border-bottom:1px solid var(--line)}.q:last-child{border:0}
+.q.bad input[type=text],.q.bad input[type=number],.q.bad input[type=date],.q.bad textarea{border-color:var(--er)}
+.err{color:var(--er);font-size:.9rem;margin-top:.3rem}
+.opt{display:flex;gap:.6rem;align-items:center;padding:.5rem .7rem;border:1.5px solid var(--line);border-radius:8px;margin:.3rem 0;cursor:pointer;background:#fff}
+.opt:has(input:checked){border-color:var(--ac);background:var(--acs)}
+.opt input{accent-color:var(--ac);width:1.1rem;height:1.1rem}
+.scale{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.4rem}.scale .opt{flex-direction:column;text-align:center;margin:0;justify-content:center}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;border-radius:99px;padding:.1rem .6rem;background:#e8ebf0;color:#3b4557}
+.tag.menunggu_peninjauan,.tag.draft{background:var(--wns);color:var(--wn)}.tag.sedang_ditinjau{background:var(--ins);color:var(--in)}
+.tag.perlu_klarifikasi{background:var(--ers);color:var(--er)}.tag.klarifikasi_dijawab{background:var(--acs);color:var(--ac)}
+.tag.sudah_ditinjau,.tag.terkirim,.tag.ok{background:var(--oks);color:var(--ok)}.tag.ukur{background:var(--ins);color:var(--in)}
+.note{border-radius:8px;padding:.7rem .9rem;margin:.7rem 0;font-size:.95rem}
+.note.w{background:var(--wns);color:#5c3d00}.note.i{background:var(--acs)}.note.e{background:var(--ers);color:var(--er)}.note.g{background:var(--oks)}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+table{width:100%;border-collapse:collapse}td{padding:.45rem .3rem;border-bottom:1px solid var(--line);vertical-align:top}td:first-child{color:var(--mut);width:42%}
+.em{color:var(--mut);font-style:italic}
+.big{font:700 3rem "Bricolage Grotesque",sans-serif}
+ol.tl{list-style:none;padding:0;margin:0;border-left:2px solid var(--line)}ol.tl li{padding:0 0 .9rem 1rem;position:relative}
+ol.tl li:before{content:"";position:absolute;left:-6px;top:.45rem;width:10px;height:10px;border-radius:50%;background:var(--ac)}
+#toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);max-width:90%;background:var(--ink);color:#fff;padding:.7rem 1rem;border-radius:8px;display:none;z-index:9}
+footer{text-align:center;color:var(--mut);font-size:.85rem;padding:0 1rem 2rem}
+.chips button{background:#fff;color:var(--ink);border-color:var(--line);padding:.3rem .8rem;font-weight:500}.chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+@media(max-width:600px){h1{font-size:1.5rem}nav{gap:.8rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<nav><b>Cek Mandiri</b><a href="#/home" data-n="home">Beranda</a><a href="#/history" data-n="history">Riwayat</a><a href="#/settings" data-n="settings">Pengaturan</a></nav>
+<main id="app"></main>
+<footer><b>Hasil self-assessment bukan diagnosis.</b> Laporan Anda akan ditinjau oleh tenaga kesehatan.</footer>
+<div id="toast" role="alert"></div>
+<script>
+const DEF='https://telehealth.informatikaunimus.site/api';
+const app=document.getElementById('app');
+const CFG=()=>{try{return JSON.parse(localStorage.getItem('tlh')||'{}')}catch{return{}}};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=s=>s?new Date(s).toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'}):'';
+const lbl=o=>o?.label||o?.kode||'';
+const tag=o=>o?`<span class="tag ${esc(o.kode)}">${esc(lbl(o))}</span>`:'';
+let S={id:null,form:null,answers:{},sec:0,errors:{}};
+
+async function api(p,{method='GET',body}={}){
+  const c=CFG();let r,j;
+  try{r=await fetch((c.url||DEF)+p,{method,headers:{Authorization:'Bearer '+(c.token||''),'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined})}
+  catch{throw{status:0,message:'Tidak dapat terhubung ke server. Periksa koneksi internet dan alamat API.'}}
+  try{j=await r.json()}catch{throw{status:r.status,message:'Respons server tidak dapat dibaca. Periksa alamat API (harus berakhiran /api).'}}
+  if(!j.success){if(r.status===401)j.message='Token tidak valid. Periksa token di menu Pengaturan.';throw{status:r.status,...j}}
+  return j;
+}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',4500)}
+const fail=e=>toast(e.message||'Terjadi kesalahan.');
+const ready=()=>{const c=CFG();return c.token&&c.nim&&c.nama&&c.kelas};
+const MHS=()=>{const c=CFG();return{nim:c.nim,nama:c.nama,kelas:c.kelas}};
+
+/* ---------- form helpers ---------- */
+function isVisible(c,a){
+  if(!c)return true;
+  if(c.any)return c.any.some(x=>isVisible(x,a));
+  if(c.all)return c.all.every(x=>isVisible(x,a));
+  const v=a[c.question];const f=v!==undefined&&v!==null&&v!==''&&!(Array.isArray(v)&&!v.length);
+  if('equals' in c)return v===c.equals;
+  if('in' in c)return c.in.includes(v);
+  if('includes' in c)return Array.isArray(v)&&v.includes(c.includes);
+  if('filled' in c)return f===c.filled;
+  return true;
+}
+const filled=v=>v!==undefined&&v!==null&&v!==''&&!(Array.isArray(v)&&!v.length);
+const qText=q=>q.pertanyaan||q.label||q.text||q.id;
+const secTitle=s=>s.judul||s.title||s.nama||s.id;
+const isReq=q=>!!(q.wajib??q.required);
+const visSecs=()=>S.form.sections.filter(s=>isVisible(s.show_if,S.answers));
+const visQs=s=>(s.questions||[]).filter(q=>isVisible(q.show_if,S.answers));
+const allQs=()=>S.form.sections.flatMap(s=>s.questions||[]);
+function opts(q){
+  let o=q.options||q.opsi||[];
+  if(!o.length&&q.type==='scale'&&q.min!=null&&q.max!=null){o=[];for(let i=q.min;i<=q.max;i++)o.push(i)}
+  return o.map(x=>typeof x==='object'?{v:x.value??x.nilai??x.kode??x.id,l:x.label??x.teks??x.text??x.value,ex:!!(x.exclusive||x.eksklusif)}:{v:x,l:x,ex:false});
+}
+function pruneHidden(){const vis=new Set(S.form.sections.filter(s=>isVisible(s.show_if,S.answers)).flatMap(s=>visQs(s).map(q=>q.id)));for(const k of Object.keys(S.answers))if(!vis.has(k))delete S.answers[k]}
+function payload(){const p={};const vis=new Set(visSecs().flatMap(s=>visQs(s).map(q=>q.id)));for(const q of allQs())p[q.id]=vis.has(q.id)&&filled(S.answers[q.id])?S.answers[q.id]:null;return p}
+
+function qHtml(q){
+  const v=S.answers[q.id],id=esc(q.id),e=S.errors[q.id],o=opts(q);
+  let inp='';
+  const dt=q.data_type==='pengukuran'?' <span class="tag ukur">hasil pengukuran</span>':'';
+  if(q.type==='text')inp=`<input type="text" data-q="${id}" maxlength="${q.max_length||200}" value="${esc(v)}">`;
+  else if(q.type==='textarea')inp=`<textarea data-q="${id}" maxlength="${q.max_length||1000}">${esc(v)}</textarea>`;
+  else if(q.type==='number')inp=`<div class="row" style="flex-wrap:nowrap"><input type="number" step="any" data-q="${id}" min="${q.min??''}" max="${q.max??''}" value="${esc(v)}">${q.satuan?`<span>${esc(q.satuan)}</span>`:''}</div>${q.min!=null?`<div class="mut">Isi antara ${q.min}–${q.max} ${esc(q.satuan||'')}</div>`:''}`;
+  else if(q.type==='date')inp=`<input type="date" data-q="${id}" max="${new Date().toISOString().slice(0,10)}" value="${esc(v)}">`;
+  else if(q.type==='single_choice'||q.type==='scale')inp=`<div class="${q.type==='scale'?'scale':''}">${o.map(x=>`<label class="opt"><input type="radio" name="${id}" data-q="${id}" value="${esc(x.v)}" ${String(v)===String(x.v)?'checked':''}><span>${esc(x.l)}</span></label>`).join('')}</div>`;
+  else if(q.type==='multi_choice')inp=o.map(x=>`<label class="opt"><input type="checkbox" data-q="${id}" value="${esc(x.v)}" ${(v||[]).includes(x.v)?'checked':''}><span>${esc(x.l)}</span></label>`).join('');
+  return `<div class="q ${e?'bad':''}" data-qid="${id}"><label class="f">${esc(qText(q))}${isReq(q)?' <span style="color:var(--er)">*</span>':' <span class="mut">(opsional)</span>'}${dt}</label>${q.bantuan||q.help?`<div class="mut">${esc(q.bantuan||q.help)}</div>`:''}${inp}${e?`<div class="err">${esc(e)}</div>`:''}</div>`;
+}
+
+/* ---------- views ---------- */
+const views={
+async settings(){
+  const c=CFG();
+  app.innerHTML=`<h1>Pengaturan</h1><div class="card"><h2>Identitas mahasiswa</h2><p class="mut">Dikirim di setiap pengisian agar dosen dapat memeriksa pekerjaan Anda.</p>
+  <label class="f">NIM</label><input type="text" id="s-nim" value="${esc(c.nim)}" maxlength="20">
+  <label class="f" style="margin-top:.7rem">Nama lengkap</label><input type="text" id="s-nama" value="${esc(c.nama)}" maxlength="100">
+  <label class="f" style="margin-top:.7rem">Kelas</label><input type="text" id="s-kelas" value="${esc(c.kelas)}" maxlength="20" placeholder="TI-5A"></div>
+  <div class="card"><h2>Koneksi API</h2><label class="f">Token pasien (dari dosen)</label><input type="password" id="s-token" value="${esc(c.token)}" placeholder="tlh_pasien_…">
+  <label class="f" style="margin-top:.7rem">Alamat API</label><input type="text" id="s-url" value="${esc(c.url||DEF)}"></div>
+  <button id="s-save">Simpan dan uji koneksi</button><p class="mut">Data disimpan di browser Anda (localStorage), bukan di kode.</p>`;
+  document.getElementById('s-save').onclick=async()=>{
+    const n={nim:s('nim').toUpperCase(),nama:s('nama'),kelas:s('kelas'),token:s('token'),url:s('url').replace(/\/+$/,'')};
+    if(!/^[A-Z0-9]{5,20}$/.test(n.nim))return toast('NIM harus 5–20 karakter huruf/angka.');
+    if(n.nama.length<3)return toast('Nama minimal 3 karakter.');
+    if(!n.kelas)return toast('Kelas wajib diisi.');
+    if(!n.token)return toast('Token wajib diisi.');
+    localStorage.setItem('tlh',JSON.stringify(n));
+    try{const r=await api('/me?nim='+n.nim);toast('Terhubung sebagai '+r.data.nama);location.hash='#/home'}catch(e){fail(e)}
+  };
+  function s(k){return document.getElementById('s-'+k).value.trim()}
+},
+async home(){
+  const c=CFG();
+  const [me,fs,uts]=await Promise.all([api('/me?nim='+c.nim),api('/forms'),api('/uts/'+c.nim).catch(()=>null)]);
+  const m=me.data,st=m.statistik||{};
+  app.innerHTML=`<h1>Halo, ${esc(m.nama)}</h1><p class="mut">No. RM ${esc(m.no_rm)} · Mahasiswa ${esc(c.nama)} (${esc(c.nim)}, ${esc(c.kelas)})</p>
+  ${st.perlu_klarifikasi?`<div class="note w"><b>${st.perlu_klarifikasi} laporan</b> menunggu jawaban klarifikasi Anda. <a href="#/history">Buka riwayat</a></div>`:''}
+  <div class="grid"><div class="stat"><b>${st.total||0}</b>Total</div><div class="stat"><b>${st.draf||0}</b>Draf</div><div class="stat"><b>${st.menunggu||0}</b>Menunggu</div><div class="stat"><b>${st.perlu_klarifikasi||0}</b>Perlu klarifikasi</div><div class="stat"><b>${st.sudah_ditinjau||0}</b>Sudah ditinjau</div></div>
+  <h2>Pilih formulir</h2>${fs.data.map(f=>`<div class="card"><h3>${esc(f.judul)}</h3><p class="mut">${esc(f.jenis_hasil||f.deskripsi||'')} ${f.estimasi_menit?'· ± '+f.estimasi_menit+' menit':''}</p><a class="btn" href="#/form/${esc(f.id)}">Mulai self-assessment</a></div>`).join('')}
+  ${uts?utsHtml(uts.data):''}`;
+},
+async form(id){
+  const f=(await api('/forms/'+id)).data;
+  const pt=Array.isArray(f.petunjuk)?f.petunjuk:(f.petunjuk?[f.petunjuk]:[]);
+  const cons=typeof f.persetujuan==='object'?(f.persetujuan.teks||f.persetujuan.text||f.persetujuan.label):f.persetujuan;
+  app.innerHTML=`<h1>${esc(f.judul)}</h1><p>${esc(f.deskripsi||f.tujuan||'')}</p>
+  ${pt.length?`<div class="card"><h2>Petunjuk pengisian</h2><ul>${pt.map(p=>`<li>${esc(typeof p==='object'?(p.teks||p.text):p)}</li>`).join('')}</ul></div>`:''}
+  <div class="card"><h2>Persetujuan penggunaan data</h2><label class="opt"><input type="checkbox" id="agree"><span>${esc(cons||'Saya memahami bahwa data ini digunakan untuk persiapan konsultasi dan hasilnya bukan diagnosis.')}</span></label></div>
+  <div class="note i">Hasil self-assessment bukan diagnosis.</div>
+  <button id="go" disabled>Mulai mengisi</button>`;
+  const a=document.getElementById('agree'),g=document.getElementById('go');
+  a.onchange=()=>g.disabled=!a.checked;
+  g.onclick=async()=>{g.disabled=true;try{const r=await api('/assessments',{method:'POST',body:{form_id:id,persetujuan:true,mahasiswa:MHS()}});S={id:r.data.id,form:f,answers:{},sec:0,errors:{}};location.hash='#/fill/'+r.data.id}catch(e){g.disabled=false;fail(e)}};
+},
+async fill(id){
+  if(S.id!==id||!S.form){
+    const d=(await api('/assessments/'+id)).data;
+    if(d.status_pengiriman?.kode==='terkirim'){location.hash='#/status/'+id;return}
+    const f=(await api('/forms/'+(d.form?.id||d.form_id))).data;
+    S={id,form:f,answers:{...(d.answers||{})},sec:0,errors:{}};
+  }
+  drawFill();
+},
+async review(id){
+  if(S.id!==id||!S.form)return location.hash='#/fill/'+id;
+  const r=(await api(`/forms/${S.form.id}/validate`,{method:'POST',body:{nim:CFG().nim,answers:payload()}})).data;
+  const k=r.kelengkapan||{},errs=r.errors||{};
+  const rows=visSecs().flatMap(s=>visQs(s).map(q=>({s,q})));
+  const secIdx=sid=>visSecs().findIndex(s=>s===sid);
+  app.innerHTML=`<h1>Periksa jawaban</h1>
+  <div class="card"><div class="row sp"><b>Kelengkapan</b><span>${k.persen??0}%</span></div><div class="bar"><i style="width:${k.persen||0}%"></i></div>
+  ${Object.keys(errs).length?`<div class="note w"><b>Masih ada yang perlu diperbaiki:</b><ul>${Object.entries(errs).map(([q,m])=>{const s=S.form.sections.find(s=>(s.questions||[]).some(x=>x.id===q));return `<li>${esc(m)} <a href="#" data-fix="${secIdx(s)}">Perbaiki</a></li>`}).join('')}</ul></div>`:'<div class="note g">Semua jawaban valid dan siap dikirim.</div>'}</div>
+  <div class="card"><h2>Ringkasan jawaban</h2><table>${rows.map(({q})=>{const v=S.answers[q.id];const o=opts(q);let t;
+    if(!filled(v))t='<span class="em">Belum diisi</span>';
+    else if(Array.isArray(v))t=v.map(x=>esc(o.find(y=>y.v===x)?.l??x)).join(', ');
+    else t=esc(o.find(y=>String(y.v)===String(v))?.l??v)+(q.satuan?' '+esc(q.satuan):'');
+    return `<tr><td>${esc(qText(q))}${q.data_type==='pengukuran'?' <span class="tag ukur">ukur</span>':''}</td><td>${t}</td></tr>`}).join('')}</table></div>
+  <div class="row"><button class="o" id="back">Ubah jawaban</button><button id="send" ${r.valid?'':'disabled'}>Kirim jawaban</button></div>`;
+  document.getElementById('back').onclick=()=>{S.sec=0;location.hash='#/fill/'+id};
+  document.querySelectorAll('[data-fix]').forEach(a=>a.onclick=e=>{e.preventDefault();S.sec=Math.max(0,+a.dataset.fix);S.errors=errs;location.hash='#/fill/'+id;if(location.hash==='#/fill/'+id)route()});
+  document.getElementById('send').onclick=async e=>{e.target.disabled=true;try{await api(`/assessments/${id}`,{method:'PATCH',body:{answers:payload()}});const x=await api(`/assessments/${id}/submit`,{method:'POST'});S={id:null,form:null,answers:{},sec:0,errors:{}};sessionStorage.setItem('done',JSON.stringify(x));location.hash='#/done/'+id}catch(er){e.target.disabled=false;if(er.errors){S.errors=er.errors;S.sec=0;location.hash='#/fill/'+id;route()}fail(er)}};
+},
+async done(id){
+  const x=JSON.parse(sessionStorage.getItem('done')||'null');
+  const d=x?.data||(await api(`/assessments/${id}/status`)).data;
+  app.innerHTML=`<div class="card" style="text-align:center"><div class="big" style="color:var(--ok)">✓</div><h1>Formulir Anda telah diterima</h1><p class="mut">Nomor laporan ${esc(id)}</p>${tag(d.status_peninjauan)}<p>${esc(x?.message||'')}</p>
+  <div class="row" style="justify-content:center"><a class="btn o" href="#/hasil/${id}">Lihat ringkasan</a><a class="btn" href="#/status/${id}">Pantau status</a><a class="btn o" href="#/home">Selesai</a></div></div>`;
+},
+async history(){
+  const list=(await api('/assessments?nim='+CFG().nim)).data;
+  const F={all:()=>1,draf:x=>x.status_pengiriman?.kode==='draft',proses:x=>['menunggu_peninjauan','sedang_ditinjau','klarifikasi_dijawab'].includes(x.status_peninjauan?.kode),klar:x=>x.status_peninjauan?.kode==='perlu_klarifikasi',done:x=>x.status_peninjauan?.kode==='sudah_ditinjau'};
+  const names={all:'Semua',draf:'Draf',proses:'Diproses',klar:'Perlu klarifikasi',done:'Sudah ditinjau'};
+  const draw=k=>{
+    const L=list.filter(F[k]);
+    app.innerHTML=`<h1>Riwayat</h1><div class="row chips" style="margin-bottom:1rem">${Object.keys(names).map(n=>`<button class="${n===k?'on':''}" data-f="${n}">${names[n]}</button>`).join('')}</div>
+    ${L.length?L.map(x=>{const dr=x.status_pengiriman?.kode==='draft';return `<div class="card"><div class="row sp"><h3>${esc(x.judul||x.form?.judul)}</h3>${tag(x.status_pengiriman)}</div>
+    <div class="mut">${esc(x.form?.judul||'')} · ${esc(x.id)} · ${fmt(x.dikirim_pada||x.dibuat_pada)}</div><div class="row" style="margin:.5rem 0">${tag(x.status_peninjauan)}${x.status_kelengkapan?`<span class="tag">${esc(x.status_kelengkapan.replace('_',' '))}</span>`:''}</div>
+    <div class="row">${dr?`<a class="btn" href="#/fill/${x.id}">Lanjutkan pengisian</a><button class="d" data-del="${x.id}">Hapus draf</button>`:`<a class="btn o" href="#/hasil/${x.id}">Lihat ringkasan</a><a class="btn" href="#/status/${x.id}">${x.klarifikasi_menunggu?'Jawab klarifikasi':x.ada_tindak_lanjut?'Lihat tindak lanjut':'Pantau status'}</a>`}</div></div>`}).join(''):'<div class="card mut">Belum ada laporan di kategori ini. Mulai dari <a href="#/home">Beranda</a>.</div>'}`;
+    app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>draw(b.dataset.f));
+    app.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{if(!confirm('Hapus draf ini?'))return;try{await api('/assessments/'+b.dataset.del,{method:'DELETE'});const i=list.findIndex(x=>x.id===b.dataset.del);list.splice(i,1);draw(k)}catch(e){fail(e)}});
+  };draw('all');
+},
+async hasil(id){
+  const h=(await api(`/assessments/${id}/hasil`)).data;const hs=h.hasil||h;
+  const k=hs.kelengkapan||{},sk=hs.skor,pr=h.perubahan||hs.perubahan;
+  app.innerHTML=`<h1>${esc(hs.judul||'Hasil assessment')}</h1><p class="mut">${esc(id)}</p>
+  ${sk?`<div class="card"><div class="mut">Skor GAD-7</div><div class="big">${sk.total}<span class="mut" style="font-size:1.2rem"> / ${sk.maks}</span></div><span class="tag ${sk.kategori?.kode==='minimal'||sk.kategori?.kode==='ringan'?'ok':'perlu_klarifikasi'}">${esc(sk.kategori?.label)}</span> <span class="mut">rentang ${esc(sk.kategori?.rentang)}</span><p>${esc(sk.keterangan)}</p></div>`:''}
+  <div class="card"><div class="row sp"><b>Kelengkapan: ${esc(k.label||'')}</b><span>${k.wajib_terisi??''}/${k.wajib_total??''} wajib terisi</span></div><div class="bar"><i style="width:${k.persen||0}%"></i></div></div>
+  ${pr&&pr.perubahan?`<div class="card"><h2>Perubahan dari laporan sebelumnya</h2><p class="mut">Dibandingkan dengan ${esc(pr.pembanding_id)}${pr.skor?` · skor ${pr.skor.sebelumnya} → <b>${pr.skor.sekarang}</b> (${pr.skor.selisih>0?'+':''}${pr.skor.selisih})`:''}</p><table>${pr.perubahan.map(p=>`<tr><td>${esc(p.label)}</td><td>${esc(p.sebelumnya)} → <b>${esc(p.sekarang)}</b></td></tr>`).join('')}</table></div>`:''}
+  <div class="card"><h2>Jawaban Anda</h2><table>${(hs.ringkasan||[]).map(r=>`<tr><td>${esc(r.pertanyaan||r.label)}${r.data_type==='pengukuran'?' <span class="tag ukur">ukur</span>':''}</td><td>${r.terisi?esc(r.jawaban_teks)+(r.satuan?' '+esc(r.satuan):''):'<span class="em">Belum diisi</span>'}</td></tr>`).join('')}</table></div>
+  <div class="note w"><b>Keterbatasan hasil.</b> ${esc(hs.keterbatasan||'Hasil self-assessment bukan diagnosis.')}</div>
+  ${hs.langkah_berikutnya?`<div class="note i"><b>Langkah berikutnya.</b> ${esc(hs.langkah_berikutnya)}</div>`:''}
+  <a class="btn" href="#/status/${id}">Pantau status laporan</a>`;
+},
+async status(id){
+  const d=(await api(`/assessments/${id}/status`)).data;const tl=d.tindak_lanjut;
+  app.innerHTML=`<h1>Status laporan</h1><p class="mut">${esc(id)}</p>
+  <div class="card"><table><tr><td>Pengiriman</td><td>${tag(d.status_pengiriman)}</td></tr><tr><td>Peninjauan</td><td>${tag(d.status_peninjauan)}</td></tr></table><div class="note i">${esc(d.pesan||d.pesan_status||'')}</div></div>
+  ${(d.klarifikasi_menunggu||[]).map(k=>`<div class="card"><h2>Pertanyaan dari petugas</h2><div class="note w">${esc(k.pertanyaan)}</div><label class="f">Jawaban Anda</label><textarea id="r-${esc(k.id)}" placeholder="Tulis jawaban Anda"></textarea><div class="err" id="e-${esc(k.id)}"></div><button data-rep="${esc(k.id)}" style="margin-top:.6rem">Kirim jawaban</button></div>`).join('')}
+  ${tl?`<div class="card"><div class="row sp"><h2>Tindak lanjut</h2>${tag(tl.jenis)}</div><p>${esc(tl.arahan)}</p>${tl.jadwal_konsultasi?`<div class="note g"><b>Jadwal konsultasi:</b> ${fmt(tl.jadwal_konsultasi)}</div>`:''}<div class="mut">Dicatat oleh ${esc(tl.dicatat_oleh?.nama||'petugas')} · ${fmt(tl.dicatat_pada)}</div></div>`:''}
+  <div class="card"><h2>Riwayat status</h2><ol class="tl">${[...(d.timeline||[])].reverse().map(t=>`<li>${esc(t.keterangan||t.event)}<div class="mut">${fmt(t.waktu)}</div></li>`).join('')}</ol></div>
+  <div class="row"><a class="btn o" href="#/hasil/${id}">Lihat ringkasan</a><button id="reload">Muat ulang status</button></div>`;
+  document.getElementById('reload').onclick=route;
+  app.querySelectorAll('[data-rep]').forEach(b=>b.onclick=async()=>{
+    const cid=b.dataset.rep,t=document.getElementById('r-'+cid).value.trim();
+    if(!t){document.getElementById('e-'+cid).textContent='Jawaban tidak boleh kosong.';return}
+    b.disabled=true;try{await api(`/assessments/${id}/clarifications/${cid}/reply`,{method:'POST',body:{jawaban:t}});toast('Jawaban terkirim.');route()}catch(e){b.disabled=false;document.getElementById('e-'+cid).textContent=e.errors?.jawaban||e.message}
+  });
+}};
+
+function utsHtml(u){
+  const b=u.bukti_fitur||{};
+  return `<div class="card"><div class="row sp"><h2>Status tugas</h2>${u.penilaian?tag(u.penilaian.status):''}</div><p>Bukti fitur terdeteksi: <b>${b.tercapai}/${b.total}</b></p><div class="bar"><i style="width:${(b.tercapai/b.total)*100||0}%"></i></div>
+  <details style="margin-top:.6rem"><summary>Lihat rincian</summary><ul>${(b.daftar||[]).map(x=>`<li>${x.tercapai?'✅':'⬜'} ${esc(x.label)}</li>`).join('')}</ul></details>${u.penilaian?.catatan?`<div class="note i">${esc(u.penilaian.catatan)}</div>`:''}</div>`;
+}
+
+/* ---------- fill screen ---------- */
+function drawFill(){
+  const secs=visSecs();if(S.sec>=secs.length)S.sec=secs.length-1;
+  const s=secs[S.sec],last=S.sec===secs.length-1;
+  app.innerHTML=`<div class="mut">Bagian ${S.sec+1} dari ${secs.length}</div><div class="bar" style="margin:.3rem 0 1rem"><i style="width:${(S.sec+1)/secs.length*100}%"></i></div>
+  <div class="card"><h2>${esc(secTitle(s))}</h2>${s.deskripsi?`<p class="mut">${esc(s.deskripsi)}</p>`:''}<div id="qs">${visQs(s).map(qHtml).join('')}</div></div>
+  <div class="row"><button class="o" id="prev" ${S.sec?'':'disabled'}>Kembali</button><button class="o" id="save">Simpan draf</button><button id="next">${last?'Periksa jawaban':'Lanjut'}</button></div>`;
+  const go=async(nav)=>{
+    S.errors={};const miss={};
+    if(nav===1)for(const q of visQs(s))if(isReq(q)&&!filled(S.answers[q.id]))miss[q.id]=q.pesan_wajib||'Pertanyaan ini wajib diisi.';
+    if(Object.keys(miss).length){S.errors=miss;drawFill();document.querySelector('.q.bad')?.scrollIntoView({block:'center'});return toast('Lengkapi pertanyaan yang ditandai.')}
+    try{await api('/assessments/'+S.id,{method:'PATCH',body:{answers:payload()}});
+      if(nav===0)return toast('Draf tersimpan.');
+      if(nav===-1){S.sec--;drawFill();scrollTo(0,0)}
+      else if(last)location.hash='#/review/'+S.id;
+      else{S.sec++;drawFill();scrollTo(0,0)}
+    }catch(e){if(e.errors){S.errors=e.errors;drawFill()}fail(e)}
+  };
+  document.getElementById('save').onclick=()=>go(0);
+  document.getElementById('prev').onclick=()=>go(-1);
+  document.getElementById('next').onclick=()=>go(1);
+}
+document.addEventListener('input',e=>{
+  const id=e.target.dataset?.q;if(!id||!S.form)return;
+  const q=allQs().find(x=>x.id===id);if(!q)return;
+  const o=opts(q),t=e.target;let v;
+  if(q.type==='multi_choice'){
+    const cur=new Set(S.answers[id]||[]);const ox=o.find(x=>String(x.v)===t.value);
+    if(t.checked){if(ox?.ex)cur.clear();else o.filter(x=>x.ex).forEach(x=>cur.delete(x.v));cur.add(ox?ox.v:t.value)}else cur.delete(ox?ox.v:t.value);
+    v=[...cur];
+  }else if(q.type==='single_choice'||q.type==='scale')v=o.find(x=>String(x.v)===t.value)?.v;
+  else if(q.type==='number')v=t.value===''?undefined:Number(t.value);
+  else v=t.value===''?undefined:t.value;
+  const before=visSecs().map(s=>s.id)+'|'+visSecs().flatMap(visQs).map(x=>x.id);
+  v===undefined?delete S.answers[id]:S.answers[id]=v;
+  delete S.errors[id];
+  pruneHidden();
+  const after=visSecs().map(s=>s.id)+'|'+visSecs().flatMap(visQs).map(x=>x.id);
+  if(before!==after||q.type==='multi_choice'){
+    const pos=t.selectionStart;drawFill();
+    const n=document.querySelector(`[data-q="${id}"]:is(input[type=text],input[type=number],textarea)`);
+    if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch{}}
+  }else e.target.closest('.q')?.classList.remove('bad');
+});
+document.addEventListener('submit',e=>e.preventDefault());
+
+/* ---------- router ---------- */
+async function route(){
+  const [,name='home',id]=location.hash.split('/');
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.n===(['fill','review','form'].includes(name)?'home':['hasil','status','done'].includes(name)?'history':name)));
+  if(name!=='settings'&&!ready()){location.hash='#/settings';return}
+  const v=views[name]||views.home;
+  app.innerHTML='<p class="mut">Memuat…</p>';
+  try{await v(id)}catch(e){app.innerHTML=`<div class="card"><h2>Terjadi masalah</h2><div class="note e">${esc(e.message||'Kesalahan tidak dikenal.')}</div><button onclick="route()">Coba lagi</button> <a class="btn o" href="#/settings">Pengaturan</a></div>`}
+  scrollTo(0,0);
+}
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
